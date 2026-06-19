@@ -87,19 +87,20 @@ export function OnboardingTutorial({
   useEffect(() => {
     // If we received an external event trigger from other parts of the app
     if (externalTrigger) {
-      setTasks(prev => {
-        const updated = prev.map(t => {
-          if (t.id === externalTrigger && !t.completed) {
-            toast('Achievement Unlocked!', `Unlocked task: ${t.title} (+${t.xp} XP)`, 'success');
+      const taskToComplete = tasks.find(t => t.id === externalTrigger && !t.completed);
+      if (taskToComplete) {
+        const updated = tasks.map(t => {
+          if (t.id === externalTrigger) {
             return { ...t, completed: true };
           }
           return t;
         });
+        setTasks(updated);
         localStorage.setItem('daop_tutorial_tasks_v2', JSON.stringify(updated));
-        return updated;
-      });
+        toast('Achievement Unlocked!', `Unlocked task: ${taskToComplete.title} (+${taskToComplete.xp} XP)`, 'success');
+      }
     }
-  }, [externalTrigger]);
+  }, [externalTrigger, tasks]);
 
   const totalXP = tasks.reduce((sum, t) => sum + (t.completed ? t.xp : 0), 0);
   const maxXP = tasks.reduce((sum, t) => sum + t.xp, 0);
