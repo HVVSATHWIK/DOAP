@@ -1,0 +1,6 @@
+{
+  "name": "DAOP Platform",
+  "description": "Dynamic Agentic Orchestration Platform - Moving from static pipelines to dynamic, runtime workflow generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
